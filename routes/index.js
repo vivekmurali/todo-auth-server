@@ -14,19 +14,6 @@ router.use(
   })
 );
 
-// middleware function to check for logged-in users
-// var sessionChecker = (req, res, next) => {
-//   if (req.session.userId) {
-//     res.status(200).send("User already logged in");
-//   } else {
-//     next();
-//   }
-// };
-
-// route for Home-Page
-// router.get("/", sessionChecker, (req, res) => {
-//   res.status(401).send("Unauthorized");
-// });
 
 router.get("/notes", (req, res) => {
   const token = req.headers["authorization"].split(" ")[1];
@@ -79,19 +66,16 @@ router.put("/notes/edit/:noteid", (req, res) => {
 });
 
 router.delete("/notes/delete/:noteid", async (req, res) => {
-  // console.log("delete test");
-  // const token = req.headers["authorization"].split(" ")[1];
-  // jwt.verify(token, "jsonkey", async (err, user) => {
-  //   console.log('worked');
-  //   console.log(req.params.noteId);
-  //   if (err) {
-  //     console.log('hit the if statement');
-  //     res.status(401).send("not authorized");
-  //     return;
-  //   }
+  const token = req.headers["authorization"].split(" ")[1];
+  jwt.verify(token, "jsonkey", async (err, user) => {
+    console.log(req.params.noteId);
+    if (err) {
+      res.status(401).send("not authorized");
+      return;
+    }
     await Note.findByIdAndDelete(req.params.noteid);
     res.status(200).send("Deleted successfully");
-  // });
+  });
 });
 
 // route for user signup
