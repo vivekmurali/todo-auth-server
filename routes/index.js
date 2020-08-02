@@ -14,19 +14,6 @@ router.use(
   })
 );
 
-// middleware function to check for logged-in users
-// var sessionChecker = (req, res, next) => {
-//   if (req.session.userId) {
-//     res.status(200).send("User already logged in");
-//   } else {
-//     next();
-//   }
-// };
-
-// route for Home-Page
-// router.get("/", sessionChecker, (req, res) => {
-//   res.status(401).send("Unauthorized");
-// });
 
 router.get("/notes", (req, res) => {
   const token = req.headers["authorization"].split(" ")[1];
