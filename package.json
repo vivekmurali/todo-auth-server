@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "d": "nodemon ./bin/www",
-    "test": "jest"
+    "test": "jest",
+    "build": "ncc build ./bin/www -o dist"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -27,8 +28,16 @@
     "passport": "^0.4.1",
     "passport-local": "^1.0.0"
   },
+  "bundledDependencies": [
+    "express"
+  ],
   "devDependencies": {
+    "gulp": "^4.0.2",
     "jest": "^26.1.0",
-    "nodemon": "^2.0.4"
+    "node-loader": "^1.0.1",
+    "nodemon": "^2.0.4",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-node-externals": "^2.5.0"
   }
 }

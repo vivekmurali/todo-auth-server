@@ -14,7 +14,6 @@ router.use(
   })
 );
 
-
 router.get("/notes", (req, res) => {
   const token = req.headers["authorization"].split(" ")[1];
   jwt.verify(token, "jsonkey", (err, user) => {
@@ -30,7 +29,6 @@ router.get("/notes", (req, res) => {
     });
   });
 });
-
 router.post("/notes/new", (req, res) => {
   const token = req.headers["authorization"].split(" ")[1];
   jwt.verify(token, "jsonkey", (err, user) => {
@@ -45,7 +43,7 @@ router.post("/notes/new", (req, res) => {
     });
     note
       .save()
-      .then(() => res.status(201).send("Created"))
+      .then(() => res.status(201).json(note))
       .catch((err) => err.message);
   });
 });
@@ -58,8 +56,7 @@ router.put("/notes/edit/:noteid", (req, res) => {
       return;
     }
     await Note.findByIdAndUpdate(req.params.noteid, {
-      title: req.body.title,
-      content: req.body.content,
+      done: req.body.done,
     });
     res.status(200).send("Updated successfully");
   });
